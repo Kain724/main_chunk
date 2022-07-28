@@ -1,6 +1,6 @@
 // ** Redux Imports
 import { createSlice } from '@reduxjs/toolkit'
-
+import { postUserReg, postUserLogin } from './actionCreators'
 // ** UseJWT import to get config
 import useJwt from '@src/auth/jwt/useJwt'
 
@@ -19,14 +19,15 @@ export const authSlice = createSlice({
   },
   reducers: {
     handleLogin: (state, action) => {
+      console.log(state, action)
       state.userData = action.payload
-      state[config.storageTokenKeyName] = action.payload[config.storageTokenKeyName]
-      state[config.storageRefreshTokenKeyName] = action.payload[config.storageRefreshTokenKeyName]
-      localStorage.setItem('userData', JSON.stringify(action.payload))
-      localStorage.setItem(config.storageTokenKeyName, JSON.stringify(action.payload.accessToken))
-      localStorage.setItem(config.storageRefreshTokenKeyName, JSON.stringify(action.payload.refreshToken))
+      // state[config.storageTokenKeyName] = action.payload[config.storageTokenKeyName]
+      // state[config.storageRefreshTokenKeyName] = action.payload[config.storageRefreshTokenKeyName]
+      // localStorage.setItem('userData', JSON.stringify(action.payload))
+      // localStorage.setItem(config.storageTokenKeyName, JSON.stringify(action.payload.accessToken))
+      // localStorage.setItem(config.storageRefreshTokenKeyName, JSON.stringify(action.payload.refreshToken))
     },
-    handleLogout: state => {
+    handleLogout: (state) => {
       state.userData = {}
       state[config.storageTokenKeyName] = null
       state[config.storageRefreshTokenKeyName] = null
@@ -34,7 +35,35 @@ export const authSlice = createSlice({
       localStorage.removeItem('userData')
       localStorage.removeItem(config.storageTokenKeyName)
       localStorage.removeItem(config.storageRefreshTokenKeyName)
+    },
+    extraReducers: {
+      [postUserReg.pending]: (state) => {
+        state.loading = true
+      },
+      [postUserReg.fulfilled]: (state, action) => {
+        state.status = 'success'
+        state.data = action.payload
+      },
+      [postUserReg.rejected]: (state) => {
+        state.status = 'failed'
+      },
+      [postUserLogin.pending]: (state) => {
+        state.loading = true
+      },
+      [postUserLogin.fulfilled]: (state, action) => {
+        state.status = 'success'
+        state.data = action.payload
+      },
+      [postUserLogin.rejected]: (state) => {
+        state.status = 'failed'
+      }
+      // postUserLog
+      // [postUser.pending]: (state) => {
+      //   state.status = 'loading'
+      //   state.error = null
+      // },
     }
+    // postRegData
   }
 })
 
