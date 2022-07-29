@@ -107,12 +107,18 @@ const Login = () => {
   useEffect(() => {
     if (todos?.role) {
       console.log(todos)
-      const abil = JSON.parse(todos.ability)
+      console.log(todos.ability)
+      console.log(JSON.parse(todos.ability))
+      const abil = { ...JSON.parse(todos.ability) }
+
       console.log(abil)
 
       ability.update(JSON.parse(todos.ability))
+      // ability.update(...JSON.parse(todos.ability))
 
       navigate(getHomeRouteForLoggedInUser(todos.role))
+      // if(todo?.){
+      // }
     }
   }, [todos])
 

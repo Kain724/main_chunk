@@ -9,7 +9,6 @@ const PrivateRoute = ({ children, route }) => {
   // ** Hooks & Vars
   const ability = useContext(AbilityContext)
   const user = JSON.parse(localStorage.getItem('userData'))
-
   if (route) {
     let action = null
     let resource = null
@@ -30,7 +29,11 @@ const PrivateRoute = ({ children, route }) => {
       return <Navigate to='/access-control' />
     }
     if (user && !ability.can(action || 'read', resource)) {
-      return <Navigate to='/misc/not-authorized' replace />
+      console.log(user)
+      console.log(ability)
+
+      // return <Navigate to='/misc/not-authorized' replace />
+      return <Navigate to='/login' replace /> //TODO:fix auth
     }
   }
 
