@@ -22,33 +22,34 @@ export const authSlice = createSlice({
       state.userData = action.payload
       // state[config.storageTokenKeyName] = action.payload[config.storageTokenKeyName]
       // state[config.storageRefreshTokenKeyName] = action.payload[config.storageRefreshTokenKeyName]
+      // localStorage.setItem('userData', JSON.stringify(action.payload))
       localStorage.setItem('userData', JSON.stringify(action.payload))
 
-      localStorage.setItem(
-        'userData',
-        JSON.stringify({
-          id: 1,
-          fullName: 'John Doe',
-          username: 'johndoe',
-          avatar: '/static/media/avatar-s-11.1d46cc62.jpg',
-          email: 'admin@demo.com',
-          role: 'admin',
-          ability: [
-            {
-              action: 'manage',
-              subject: 'all'
-            }
-          ],
-          extras: {
-            eCommerceCartItemsCount: 5
-          }
-          // ,
-          // accessToken:
-          //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU5MTA0MDk1LCJleHAiOjE2NTkxMDQ2OTV9.FgT_WWkkDLrA85cQ590b3CUpnV-I29DBc3zYJBcczKo',
-          // refreshToken:
-          //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU5MTA0MDk1LCJleHAiOjE2NTkxMDQ2OTV9.5P7BXMXgkW4St9wRKNUqwW1EkiJEsC7pmhVNpxZj0gg'
-        })
-      )
+      // localStorage.setItem(
+      //   'userData',
+      //   JSON.stringify({
+      //     id: 1,
+      //     fullName: 'John Doe',
+      //     username: 'johndoe',
+      //     avatar: '/static/media/avatar-s-11.1d46cc62.jpg',
+      //     email: 'admin@demo.com',
+      //     role: 'admin',
+      //     ability: [
+      //       {
+      //         action: 'manage',
+      //         subject: 'all'
+      //       }
+      //     ],
+      //     extras: {
+      //       eCommerceCartItemsCount: 5
+      //     }
+      //     // ,
+      //     // accessToken:
+      //     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU5MTA0MDk1LCJleHAiOjE2NTkxMDQ2OTV9.FgT_WWkkDLrA85cQ590b3CUpnV-I29DBc3zYJBcczKo',
+      //     // refreshToken:
+      //     //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjU5MTA0MDk1LCJleHAiOjE2NTkxMDQ2OTV9.5P7BXMXgkW4St9wRKNUqwW1EkiJEsC7pmhVNpxZj0gg'
+      //   })
+      // )
 
       // localStorage.setItem(
       //   'userData',

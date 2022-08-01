@@ -9,6 +9,7 @@ const PrivateRoute = ({ children, route }) => {
   // ** Hooks & Vars
   const ability = useContext(AbilityContext)
   const user = JSON.parse(localStorage.getItem('userData'))
+  // const user = localStorage.getItem('userData')
   if (route) {
     let action = null
     let resource = null
@@ -25,16 +26,21 @@ const PrivateRoute = ({ children, route }) => {
     if (user && restrictedRoute) {
       return <Navigate to='/' />
     }
-    if (user && restrictedRoute && user.role === 'client') {
+    if (user && restrictedRoute && user.role === 'employee') {
       return <Navigate to='/access-control' />
     }
-    if (user && !ability.can(action || 'read', resource)) {
-      console.log(user)
-      console.log(ability)
 
+    if (user && !ability.can(action || 'read', resource)) {
       // return <Navigate to='/misc/not-authorized' replace />
-      return <Navigate to='/login' replace /> //TODO:fix auth
+      // return  <Navigate to='/dashboard/ecommerce' replace />
+      // return <Navigate to='/login' replace /> //TODO:fix 
     }
+
+    // if (user && !ability.can(action || 'read', resource)) {
+    //   // return <Navigate to='/misc/not-authorized' replace />
+    //   // return  <Navigate to='/dashboard/ecommerce' replace />
+    //   // return <Navigate to='/login' replace /> //TODO:fix auth
+    // }
   }
 
   return <Suspense fallback={null}>{children}</Suspense>

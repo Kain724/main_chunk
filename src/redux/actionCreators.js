@@ -8,12 +8,13 @@ export const postUserLogin = createAsyncThunk(
   async (userData, { dispatch, rejectWithValue }) => {
     try {
       const res = await axios.post('http://api.gate/api/login', userData)
-      console.log(res)
       if (res.status === 201) {
+        // res = JSON.parse(res)
         const dataUser = res.data.user
         const accessToken = res.data.accessToken
         const allData = { ...dataUser, accessToken }
         dispatch(handleLogin(allData))
+        // dispatch(handleLogin(res))
       }
     } catch (error) {
       return rejectWithValue(error.message)

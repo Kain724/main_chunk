@@ -1,5 +1,7 @@
 // ** React Imports
-import { useContext, useEffect } from 'react'
+import {
+   useContext,
+   useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 // ** Custom Hooks
@@ -107,8 +109,8 @@ const Login = () => {
   useEffect(() => {
     if (todos?.role) {
       console.log(todos)
-      console.log(todos.ability)
-      console.log(JSON.parse(todos.ability))
+      // console.log(todos.ability)
+      // console.log(JSON.parse(todos.ability))
       const abil = { ...JSON.parse(todos.ability) }
 
       console.log(abil)

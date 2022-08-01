@@ -42,7 +42,14 @@ import '@styles/react/libs/react-select/_react-select.scss'
 import '@styles/react/libs/tables/react-dataTable-component.scss'
 
 // ** Table Header
-const CustomHeader = ({ store, toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
+const CustomHeader = ({
+  store,
+  toggleSidebar,
+  handlePerPage,
+  rowsPerPage,
+  handleFilter,
+  searchTerm
+}) => {
   // ** Converts table to CSV
   function convertArrayOfObjectsToCSV(array) {
     let result
@@ -55,9 +62,9 @@ const CustomHeader = ({ store, toggleSidebar, handlePerPage, rowsPerPage, handle
     result += keys.join(columnDelimiter)
     result += lineDelimiter
 
-    array.forEach(item => {
+    array.forEach((item) => {
       let ctr = 0
-      keys.forEach(key => {
+      keys.forEach((key) => {
         if (ctr > 0) result += columnDelimiter
 
         result += item[key]
@@ -98,8 +105,7 @@ const CustomHeader = ({ store, toggleSidebar, handlePerPage, rowsPerPage, handle
               id='rows-per-page'
               value={rowsPerPage}
               onChange={handlePerPage}
-              style={{ width: '5rem' }}
-            >
+              style={{ width: '5rem' }}>
               <option value='10'>10</option>
               <option value='25'>25</option>
               <option value='50'>50</option>
@@ -109,8 +115,7 @@ const CustomHeader = ({ store, toggleSidebar, handlePerPage, rowsPerPage, handle
         </Col>
         <Col
           xl='6'
-          className='d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1'
-        >
+          className='d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1'>
           <div className='d-flex align-items-center mb-sm-0 mb-1 me-1'>
             <label className='mb-0' htmlFor='search-invoice'>
               Search:
@@ -120,7 +125,7 @@ const CustomHeader = ({ store, toggleSidebar, handlePerPage, rowsPerPage, handle
               className='ms-50 w-100'
               type='text'
               value={searchTerm}
-              onChange={e => handleFilter(e.target.value)}
+              onChange={(e) => handleFilter(e.target.value)}
             />
           </div>
 
@@ -167,7 +172,7 @@ const CustomHeader = ({ store, toggleSidebar, handlePerPage, rowsPerPage, handle
 const UsersList = () => {
   // ** Store Vars
   const dispatch = useDispatch()
-  const store = useSelector(state => state.users)
+  const store = useSelector((state) => state.users)
 
   // ** States
   const [sort, setSort] = useState('desc')
@@ -178,11 +183,16 @@ const UsersList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [currentRole, setCurrentRole] = useState({ value: '', label: 'Select Role' })
   const [currentPlan, setCurrentPlan] = useState({ value: '', label: 'Select Plan' })
-  const [currentStatus, setCurrentStatus] = useState({ value: '', label: 'Select Status', number: 0 })
+  const [currentStatus, setCurrentStatus] = useState({
+    value: '',
+    label: 'Select Status',
+    number: 0
+  })
 
   // ** Function to toggle sidebar
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen)
-
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen)
+  }
   // ** Get data on mount
   useEffect(() => {
     dispatch(getAllData())
@@ -226,7 +236,7 @@ const UsersList = () => {
   ]
 
   // ** Function in get data on page change
-  const handlePagination = page => {
+  const handlePagination = (page) => {
     dispatch(
       getData({
         sort,
@@ -243,7 +253,7 @@ const UsersList = () => {
   }
 
   // ** Function in get data on rows per page
-  const handlePerPage = e => {
+  const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value)
     dispatch(
       getData({
@@ -261,7 +271,7 @@ const UsersList = () => {
   }
 
   // ** Function in get data on search query change
-  const handleFilter = val => {
+  const handleFilter = (val) => {
     setSearchTerm(val)
     dispatch(
       getData({
@@ -288,7 +298,7 @@ const UsersList = () => {
         pageCount={count || 1}
         activeClassName='active'
         forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        onPageChange={page => handlePagination(page)}
+        onPageChange={(page) => handlePagination(page)}
         pageClassName={'page-item'}
         nextLinkClassName={'page-link'}
         nextClassName={'page-item next'}
@@ -356,7 +366,7 @@ const UsersList = () => {
                 className='react-select'
                 classNamePrefix='select'
                 theme={selectThemeColors}
-                onChange={data => {
+                onChange={(data) => {
                   setCurrentRole(data)
                   dispatch(
                     getData({
@@ -382,7 +392,7 @@ const UsersList = () => {
                 classNamePrefix='select'
                 options={planOptions}
                 value={currentPlan}
-                onChange={data => {
+                onChange={(data) => {
                   setCurrentPlan(data)
                   dispatch(
                     getData({
@@ -408,7 +418,7 @@ const UsersList = () => {
                 classNamePrefix='select'
                 options={statusOptions}
                 value={currentStatus}
-                onChange={data => {
+                onChange={(data) => {
                   setCurrentStatus(data)
                   dispatch(
                     getData({
