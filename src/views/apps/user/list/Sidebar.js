@@ -1,12 +1,6 @@
 // ** React Import
-import axios from 'axios'
 
-import {
-  useState
-  // , useEffect
-} from 'react'
-
-// import axios from 'axios'
+import { useState } from 'react'
 
 // ** Hooks
 import { useTranslation } from 'react-i18next'
@@ -27,27 +21,24 @@ import { useForm, Controller } from 'react-hook-form'
 import { Button, Label, Form, Input } from 'reactstrap'
 
 // ** Store & Actions
-import {
-  getAllUsers
-  // , postUser
-} from '../store/ActionCreators.js'
+import { getAllUsers, postUser } from '../store/ActionCreators.js'
 // import { addUser } from '../store/UsersSlice.js'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+// import axios from 'axios'
 
 // TODO : add logic
 
 const SidebarNewUsers = ({ open, toggleSidebar }) => {
   // ** Store Vars
   const dispatch = useDispatch()
-  // const { status, error } = useSelector((state) => state.usersSlice.data)
-  // console.log(usersData)
+  const token = useSelector((state) => state.auth.userData.accessToken)
 
   // ** States
   // const [data, setData] = useState(null)
   const [role, setRole] = useState('employee')
-  // const [id, setId] = useState('')
 
   const defaultValues = {
+    token,
     userRole: role,
     name: '',
     surname: '',
@@ -82,84 +73,38 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   // ** Function to handle form submit
   const onSubmit = (data) => {
-    const token = JSON.parse(window.localStorage.getItem('userData'))
-    // console.log(token.accessToken.slice(4))
-    const tokenData = token.accessToken.slice(4)
-    // const tokenData = '1jUYGwSHshQhDp4GNDdcWiQ6qK1mP6EO0utndSGN'
-
-    const config = {
-      headers: { Authorization: `Bearer ${tokenData}` }
-    }
-
-    console.log(config)
-    axios.get('http://api.gate/api/hi', config).then(console.log).catch(console.log)
-
-    console.log(data)
     reset()
-
-    // dispatch(
-    // addUser({
-    //   role,
-    //   id: uuidv4(),
-    //   expirDate: data.expirDate,
-    //   iDNumber: data.iDNumber,
-    //   actualRegAddress: data.actualRegAddress,
-    //   citizenship: data.citizenship,
-    //   dateBirth: data.dateBirth,
-    //   file: data.file,
-    //   gender: data.gender,
-    //   marital: data.marital,
-    //   name: data.name,
-    //   passportNumber: data.passportNumber,
-    //   personalEmail: data.personalEmail,
-    //   personalPhoneNumber: data.personalPhoneNumber,
-    //   regAddress: data.regAddress,
-    //   surname: data.surname,
-    //   workEmail: data.workEmail,
-    //   workPhoneNumber: data.workPhoneNumber
-    // })
-    // )
 
     dispatch(getAllUsers())
 
-    // dispatch(
-    //   postUser({
-    //     role,
-    //     id: uuidv4(),
-    //     expirDate: data.expirDate,
-    //     iDNumber: data.iDNumber,
-    //     actualRegAddress: data.actualRegAddress,
-    //     citizenship: data.citizenship,
-    //     dateBirth: data.dateBirth,
-    //     file: data.file,
-    //     gender: data.gender,
-    //     marital: data.marital,
-    //     name: data.name,
-    //     passportNumber: data.passportNumber,
-    //     personalEmail: data.personalEmail,
-    //     personalPhoneNumber: data.personalPhoneNumber,
-    //     regAddress: data.regAddress,
-    //     surname: data.surname,
-    //     workEmail: data.workEmail,
-    //     workPhoneNumber: data.workPhoneNumber
-    //   })
-    // )
+    dispatch(
+      postUser({
+        token,
+        name: data.name,
+        // role,
+        // id: uuidv4(),
+        // expirDate: data.expirDate,
+        // iDNumber: data.iDNumber,
+        // actualRegAddress: data.actualRegAddress,
+        // citizenship: data.citizenship,
+        // dateBirth: data.dateBirth,
+        file: data.file
+        // gender: data.gender,
+        // marital: data.marital,
+        // passportNumber: data.passportNumber,
+        // personalEmail: data.personalEmail,
+        // personalPhoneNumber: data.personalPhoneNumber,
+        // regAddress: data.regAddress,
+        // surname: data.surname,
+        // workEmail: data.workEmail,
+        // workPhoneNumber: data.workPhoneNumber
+      })
+    )
   }
-
-  // useEffect(() => {
-  //   setId(uuidv4())
-  // }, [dispatch])
-
-  // useEffect(() => {
-  //   setId(uuidv4())
-  // }, [handleSubmit])
 
   const { t } = useTranslation()
 
   const handleSidebarClosed = () => {
-    // for (const key in defaultValues) {
-    //   setValue(key, '')
-    // }
     setRole('employee')
   }
 
@@ -631,13 +576,14 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             control={control}
             value={role}
             rules={{ required: 'Введите роль ' }}
-            onChange={(e) => setRole(e.target.value)}>
+              onChange={(e) => setRole(e.target.value)}>
             <option value='HR'>{t('HR')}</option>
-            <option value='employee'>{t('Employee')}</option>
+            // <option value='employee'>{t('Employee')}</option>
             <option value='admin'>{t('Admin')}</option>
           </Input>
-        </div> 
-         <div className='mb-1'>
+        </div>
+        */}
+        <div className='mb-1'>
           <Label className='form-label' for='file'>
             {t('Choose File')}
             <span className='text-danger'>*</span>
@@ -653,7 +599,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
               </>
             )}
           />
-        </div>  */}
+        </div>{' '}
         <Button type='submit' className='me-1' color='primary'>
           {t('Submit')}
         </Button>
@@ -662,6 +608,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
         </Button>
       </Form>
     </Sidebar>
+    //TODO:create messege if request is error
   )
 }
 

@@ -5,10 +5,9 @@ import { addUser } from './UsersSlice.js'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const getAllUsers = createAsyncThunk('users/getAllUsers', async (_, { dispatch }) => {
-
   // const res = await axios.get('http://api.gate/products/list')
 
-    console.log(res)
+  console.log(res)
 
   res = await dispatch(addUser(res.data))
 
@@ -17,14 +16,21 @@ export const getAllUsers = createAsyncThunk('users/getAllUsers', async (_, { dis
 
 export const postUser = createAsyncThunk(
   'users/postUser',
+
   async (userData, { dispatch, rejectWithValue }) => {
+    console.log('🚀 ~ file: ActionCreators.js ~ line 37 ~ tokenData', userData)
     try {
-      const res = await axios.post('http://api.gate/api/register', userData)
-      console.log(res)
-      if (!res.status === 201) {
+      const tokenBearer = {
+        headers: { Authorization: `Bearer ${userData.token}` }
+      }
+      delete userData.token
+      const res = await axios.post('http://api.gate/api/create_user', userData, tokenBearer)
+
+      if (res.status === 201) {
+        dispatch(addUser(userData))
+      } else {
         throw new Error('Server error: ')
       }
-      await dispatch(addUser(userData))
     } catch (error) {
       return rejectWithValue(error.message)
     }
