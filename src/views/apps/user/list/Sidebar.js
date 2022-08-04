@@ -21,10 +21,9 @@ import { useForm, Controller } from 'react-hook-form'
 import { Button, Label, Form, Input } from 'reactstrap'
 
 // ** Store & Actions
-import { getAllUsers, postUser } from '../store/ActionCreators.js'
+import {  postUser } from '../store/ActionCreators.js'
 // import { addUser } from '../store/UsersSlice.js'
 import { useDispatch, useSelector } from 'react-redux'
-// import axios from 'axios'
 
 // TODO : add logic
 
@@ -34,7 +33,6 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const token = useSelector((state) => state.auth.userData.accessToken)
 
   // ** States
-  // const [data, setData] = useState(null)
   const [role, setRole] = useState('employee')
 
   const defaultValues = {
@@ -47,7 +45,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
     actualRegAddress: '',
     iDNumber: '',
     passportNumber: '',
-    DocIssueDate: '',
+    docIssueDate: '',
     expirDate: '',
     gender: '',
     citizenship: '',
@@ -63,7 +61,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
   const {
     control,
 
-    reset,
+    // reset,
 
     handleSubmit
   } = useForm({
@@ -73,31 +71,30 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
 
   // ** Function to handle form submit
   const onSubmit = (data) => {
-    reset()
-
-    dispatch(getAllUsers())
+    // reset()
 
     dispatch(
       postUser({
         token,
         name: data.name,
-        // role,
+        role,
         // id: uuidv4(),
-        // expirDate: data.expirDate,
-        // iDNumber: data.iDNumber,
-        // actualRegAddress: data.actualRegAddress,
-        // citizenship: data.citizenship,
-        // dateBirth: data.dateBirth,
-        file: data.file
-        // gender: data.gender,
-        // marital: data.marital,
-        // passportNumber: data.passportNumber,
-        // personalEmail: data.personalEmail,
-        // personalPhoneNumber: data.personalPhoneNumber,
-        // regAddress: data.regAddress,
-        // surname: data.surname,
-        // workEmail: data.workEmail,
-        // workPhoneNumber: data.workPhoneNumber
+        expirDate: data.expirDate,
+        iDNumber: data.iDNumber,
+        actualRegAddress: data.actualRegAddress,
+        citizenship: data.citizenship,
+        dateBirth: data.dateBirth,
+        docIssueDate: data.docIssueDate,
+        file: data.file,
+        gender: data.gender,
+        marital: data.marital,
+        passportNumber: data.passportNumber,
+        personalEmail: data.personalEmail,
+        personalPhoneNumber: data.personalPhoneNumber,
+        regAddress: data.regAddress,
+        surname: data.surname,
+        workEmail: data.workEmail,
+        workPhoneNumber: data.workPhoneNumber
       })
     )
   }
@@ -149,7 +146,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             )}
           />
         </div>
-        {/* <div className='mb-1'>
+        <div className='mb-1'>
           <Label className='form-label' for='surname'>
             {t('Surname')}
             <span className='text-danger'>*</span>
@@ -434,12 +431,12 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
           />
         </div>
         <div className='mb-1'>
-          <Label className='form-label' for='DocIssueDate'>
+          <Label className='form-label' for='docIssueDate'>
             {t('Document issue date')}
             <span className='text-danger'>*</span>
           </Label>
           <Controller
-            name='DocIssueDate'
+            name='docIssueDate'
             control={control}
             rules={{
               //TODO: what kind data must be here?
@@ -455,7 +452,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             }}
             render={({ field, fieldState: { error } }) => (
               <>
-                <Input type='number' id='DocIssueDate' placeholder={t('write date')} {...field} />
+                <Input type='number' id='docIssueDate' placeholder={t('write date')} {...field} />
                 {error && <div style={{ color: 'red', marginTop: '10px' }}>{error.message}</div>}
               </>
             )}
@@ -576,13 +573,12 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
             control={control}
             value={role}
             rules={{ required: 'Введите роль ' }}
-              onChange={(e) => setRole(e.target.value)}>
+            onChange={(e) => setRole(e.target.value)}>
             <option value='HR'>{t('HR')}</option>
             // <option value='employee'>{t('Employee')}</option>
             <option value='admin'>{t('Admin')}</option>
           </Input>
         </div>
-        */}
         <div className='mb-1'>
           <Label className='form-label' for='file'>
             {t('Choose File')}
@@ -608,7 +604,7 @@ const SidebarNewUsers = ({ open, toggleSidebar }) => {
         </Button>
       </Form>
     </Sidebar>
-    //TODO:create messege if request is error
+    //TODO:create message if request is error
   )
 }
 

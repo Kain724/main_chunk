@@ -10,6 +10,7 @@ import { columns } from './columns'
 // ** Store & Actions
 import { getAllData, getData } from '../store'
 import { useDispatch, useSelector } from 'react-redux'
+import { getAllUsers } from '../store/ActionCreators.js'
 
 // ** Third Party Components
 import Select from 'react-select'
@@ -50,6 +51,15 @@ const CustomHeader = ({
   handleFilter,
   searchTerm
 }) => {
+
+  const dispatch = useDispatch()
+
+  function toggleGetAllEmployees() {
+    dispatch(getAllUsers())
+    // const { res } = await axios.get('http://api.gate/api/users')
+    // console.log(res)
+  }
+
   // ** Converts table to CSV
   function convertArrayOfObjectsToCSV(array) {
     let result
@@ -160,7 +170,10 @@ const CustomHeader = ({
             </UncontrolledDropdown>
 
             <Button className='add-new-user' color='primary' onClick={toggleSidebar}>
-              Add New User
+              Добавить  сотрудника
+            </Button>
+            <Button style={{ marginLeft: '10px' }} color='primary' onClick={toggleGetAllEmployees}>
+              Получить всех сотрудников
             </Button>
           </div>
         </Col>
